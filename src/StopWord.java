@@ -98,4 +98,9 @@ public class StopWord {
         return countPalavras;
     }
 
+    public void clear(){
+
+        countPalavras = 0;
+    }
+
 }

@@ -152,6 +152,10 @@ public class ListaOrdenadaDePalavras {
     }
 
     public void maiorOcorrencia() {
+        if(count ==0){
+            System.out.println("Nenhum objeto encontrado!");
+            return;
+        }
         String palavraAux = "";
         Palavra p = head;
         while (p != null) {
@@ -169,6 +173,10 @@ public class ListaOrdenadaDePalavras {
     }
 
     public Palavra pesquisarPalavra(String p) {
+        if(count ==0){
+            System.out.println("Nenhum objeto encontrado!");
+            return null;
+        }
         Palavra aux = head;
 
         for (int i = 0; i < listaOcorrencias.size(); i++) {
@@ -182,12 +190,20 @@ public class ListaOrdenadaDePalavras {
     }
 
     public void listar(Palavra p) {
+        if(count ==0){
+            System.out.println("Nenhum objeto encontrado!");
+            return;
+        }
         System.out.println("Palavra: " + p.palavra + "  |   Paginas: " + listaOcorrencias.todasPaginas(p.palavra));
 
     }
 
     @Override
     public String toString() {
+        if(count ==0){
+            return ("Nenhum objeto encontrado!");
+            
+        }
 
         Palavra aux = head.next;
         StringBuilder s = new StringBuilder();
@@ -205,6 +221,13 @@ public class ListaOrdenadaDePalavras {
             return null;
         }
         return s.replaceAll("[^A-Za-z0-9]", "");
+    }
+
+    public void clear(){
+        head = null;
+        tail = null;
+        count = 0;
+        maiorOcorrencia = 0;
     }
 
 }

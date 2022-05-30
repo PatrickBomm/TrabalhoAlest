@@ -28,6 +28,12 @@ public class ListaDeOcorrencias {
 
     }
 
+    public void clear(){
+        head = null;
+        tail = null;
+        count = 0;
+    }
+
     public void start() {
         head = null;
         tail = null;

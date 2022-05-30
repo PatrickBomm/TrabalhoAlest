@@ -16,21 +16,27 @@ public class App {
     }
 
     public void view() throws IOException {
+        
         ocorrencias.start();
         sw.readTxt();
         ls.start();
-        readTxt();
+        nomeArquivo();
+
         boolean cond = true;
 
         while (cond) {
             System.out.println("\nMenu!\n");
             System.out.println("Escolha a alternativa desejada:\n");
             System.out.println(
-                    "1. Exibir todo o índice remissivo (em ordem alfabética);\n2. Exibir o percentual de stopwords do texto (quanto % do texto é formado por stopwords);\n3. Encontrar a palavra mais frequente, isto é, com maior número de ocorrências;\n4. Pesquisar palavras, isto é, o usuário informa uma palavra e o programa lista os números das páginas em que a palavra ocorre;\n5. Encerrar o programa.");
+                    "1. Exibir todo o índice remissivo (em ordem alfabética);\n2. Exibir o percentual de stopwords do texto (quanto % do texto é formado por stopwords);\n3. Encontrar a palavra mais frequente, isto é, com maior número de ocorrências;\n4. Pesquisar palavras, isto é, o usuário informa uma palavra e o programa lista os números das páginas em que a palavra ocorre;\n5. Carregar outro arquivo txt;\n6. Encerrar o programa.");
             int opc = sc.nextInt();
 
             switch (opc) {
                 case 1:
+                if(ls.size() ==0){
+                    System.out.println("Nenhum objeto encontrado!");
+                    break;
+                }
                     System.out.println(ls.listar());
 
                     break;
@@ -44,6 +50,10 @@ public class App {
 
                     break;
                 case 4:
+                if(ls.size() ==0){
+                    System.out.println("Nenhum objeto encontrado!");
+                    break;
+                }
 
                     System.out.println("Digite a palavra que deseja pesquisar: ");
                     sc.nextLine();
@@ -53,6 +63,19 @@ public class App {
 
                     break;
                 case 5:
+
+                    ls.clear();
+                    ocorrencias.clear();
+                    sw.clear();
+
+                    countPalavras = 0;
+
+                    sc.nextLine();                    
+
+                    nomeArquivo();
+
+                    break;
+                case 6:
                     cond = false;
                     System.out.println("\nFinalizando programa!");
                     break;
@@ -65,7 +88,7 @@ public class App {
 
     }
 
-    public void readTxt() throws IOException {
+    public void readTxt(String arquivoNome) throws IOException {
         int nLinha = 0;
         int nPagina = 1;
 
@@ -74,12 +97,6 @@ public class App {
 
         ArquivoTexto arquivo = new ArquivoTexto();
 
-        System.out.println("Arquivos na pasta 'assets':");
-        visualizarArquivos();
-
-        System.out.println("\nDigite o nome do arquivo com o .txt:");
-        String arquivoNome = "assets/";
-        arquivoNome += sc.nextLine();
 
         arquivo.open(arquivoNome);
 
@@ -110,7 +127,7 @@ public class App {
 
                     if (a == 0) {
                         ls.add(palavra, nPagina);
-                        
+
                     }
 
                 }
@@ -133,5 +150,16 @@ public class App {
             System.out.println(arquivos.getName());
         }
 
+    }
+
+    public void nomeArquivo() throws IOException{
+        System.out.println("Arquivos na pasta 'assets':");
+        visualizarArquivos();
+
+        System.out.println("\nDigite o nome do arquivo com o .txt:");
+        String arquivoNome = "assets/";
+        arquivoNome += sc.nextLine();
+
+        readTxt(arquivoNome);
     }
 }
