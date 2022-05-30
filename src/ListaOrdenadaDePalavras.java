@@ -5,6 +5,7 @@
  */
 public class ListaOrdenadaDePalavras {
     ListaDeOcorrencias listaOcorrencias = new ListaDeOcorrencias();
+    ArquivoTexto aq = new ArquivoTexto();
 
     // Classe interna
     private class Palavra {
@@ -35,36 +36,89 @@ public class ListaOrdenadaDePalavras {
     }
 
     // metodo add para adicionar uma palavra na lista
-    public void add(String palavra, int numeroDaPagina) {
+   // metodo add para adicionar uma palavra na lista
+   public void add(String palavra, int numeroDaPagina) {
 
-        Palavra aux = head;
-        palavra = palavra.toLowerCase();
+    Palavra aux = head;
+    palavra = removeAllNonAlphaNumeric(palavra.toLowerCase());
+
+    if (count == 0) {
         Palavra n = new Palavra(palavra);
+        head = n;
+        tail = n;
+        n.ocorrencia++;
+        count++;
+        listaOcorrencias.add(palavra, numeroDaPagina);
+        return;
+    }
 
-        if (count == 0) {
-            head = n;
-            tail = n;
-            n.ocorrencia++;
-            count++;
-            listaOcorrencias.add(palavra, numeroDaPagina);
+    if(palavra.trim().isEmpty()) {
+        return;
+    }
+
+    for (int i = 0; i < count; i++) {
+        if (aux.palavra.equals(palavra)) {
+            this.listaOcorrencias.add(palavra, numeroDaPagina);
+            aux.ocorrencia++;
             return;
         }
+        aux = aux.next;
+    }
 
-        while(aux != null){
-            if (aux.palavra.equals(palavra)) {
-                listaOcorrencias.add(palavra, numeroDaPagina);
-                aux.ocorrencia++;
-                return;
-            }
-            aux = aux.next;
+    Palavra comp = head;
+    int posicao = 0;
+
+    for (int i = 0; i < count ; i++) {
+    if ((palavra.compareToIgnoreCase(comp.palavra)) < 0) {
+        addIndex(posicao, palavra);
+        return;
+    } else {
+     comp = comp.next;   
+     posicao++;
+    }
+}
+    Palavra n = new Palavra(palavra);
+    tail.next = n;
+    tail = n;
+    count++;
+    n.ocorrencia++;
+    listaOcorrencias.add(palavra, numeroDaPagina);
+
+}
+
+// Método usado pelo outro método add() para adicionar em ordem
+public void addIndex(int index, String palavra) {
+    // Primeiro verifica se o indice eh valido
+    if (index < 0 || index > size()) {
+        throw new IndexOutOfBoundsException();
+    }
+
+    // Depois cria o nodo
+    Palavra n = new Palavra(palavra);
+
+    // "Encadear" o nodo criado na lista
+    if (index == 0) { // se insercao no inicio
+        if (count == 0) { // se a lista estava vazia
+            tail = n;
+        } else {
+            n.next = head;
         }
+        head = n;
+    } else if (index == count) { // se insercao no fim
         tail.next = n;
         tail = n;
-        count++;
-        n.ocorrencia++;
-        listaOcorrencias.add(palavra, numeroDaPagina);
-
+    } else { // se insercao no meio
+        Palavra ant = head;
+        for (int i = 0; i < index - 1; i++) {
+            ant = ant.next;
+        }
+        n.next = ant.next;
+        ant.next = n;
     }
+
+    // Atualiza o atributo count
+    count++;
+}
 
     // metodo toString
 
@@ -125,5 +179,26 @@ public class ListaOrdenadaDePalavras {
     public void listar(Palavra p) {
        System.out.println("Palavra: " + p.palavra + "  |   Paginas: " + listaOcorrencias.todasPaginas(p.palavra));
        
+    }
+
+    @Override
+    public String toString() {
+
+        Palavra aux = head.next;
+        StringBuilder s = new StringBuilder();
+        while (aux != null) {
+
+            s.append("Palavra: " + aux.palavra + "  |   Paginas: " + listaOcorrencias.todasPaginas(aux.palavra));
+            s.append("\n");
+            aux = aux.next;
+        }
+        return s.toString();
+    }
+
+    public static String removeAllNonAlphaNumeric(String s) {
+        if (s == null) {
+            return null;
+        }
+        return s.replaceAll("[^A-Za-z0-9]", "");
     }
 }

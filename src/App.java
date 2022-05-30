@@ -4,7 +4,9 @@ public class App {
     Scanner sc = new Scanner(System.in);
     ListaOrdenadaDePalavras ls = new ListaOrdenadaDePalavras();
     ListaDeOcorrencias ocorrencias = new ListaDeOcorrencias();
+    StopWord sw = new StopWord();
     private int countPalavras;
+    private int countStopWords;
 
     public static void main(String[] args) throws Exception {
         App app = new App();
@@ -14,9 +16,9 @@ public class App {
 
     public void view() {
         ocorrencias.start();
+        sw.readTxt();
         ls.start();
         readTxt();
-
         boolean cond = true;
 
         while (cond) {
@@ -29,11 +31,10 @@ public class App {
             switch (opc) {
                 case 1:
                     System.out.println(ls.listar());
-                
-                    
+
                     break;
                 case 2:
-                    int percentual = (ls.size() * 100) / countPalavras;
+                    int percentual = (countStopWords * 100) / countPalavras;
 
                     System.out.println("Percentual: " + percentual + "%");
 
@@ -105,12 +106,20 @@ public class App {
                     break;
                 }
                 if (nPagina >= 0) {
-                    ls.add(palavra, nPagina);
+
+                    if (sw.contains(palavra) != true) {
+                        ls.add(palavra, nPagina);
+                    }else{
+                        countStopWords++;
+
+                    }
+
                 }
             } while (true);
 
         } while (true);
 
         arquivo.close();
+
     }
 }
