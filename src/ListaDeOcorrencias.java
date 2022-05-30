@@ -106,9 +106,15 @@ public class ListaDeOcorrencias {
 
         Node aux = head;
         String s = "";
+        Boolean a;
+
         while (aux != null) {
             if (aux.palavra.equals(palavra)) {
-                s += (aux.numeroDaPagina + "; ");
+                String b = Integer.toString(aux.numeroDaPagina);
+                a = s.contains(b);
+                if (a == false) {
+                    s += (aux.numeroDaPagina + "; ");
+                }
             }
             aux = aux.next;
         }
