@@ -34,7 +34,7 @@ public class App {
             switch (opc) {
                 case 1:
                 if(ls.size() ==0){
-                    System.out.println("Nenhum objeto encontrado!");
+                    System.out.println("\nNenhum objeto encontrado!");
                     break;
                 }
                     System.out.println(ls.listar());
@@ -51,15 +51,21 @@ public class App {
                     break;
                 case 4:
                 if(ls.size() ==0){
-                    System.out.println("Nenhum objeto encontrado!");
+                    System.out.println("\nNenhum objeto encontrado!");
                     break;
                 }
 
-                    System.out.println("Digite a palavra que deseja pesquisar: ");
+                    System.out.println("\nDigite a palavra que deseja pesquisar: ");
                     sc.nextLine();
                     String palavra = sc.nextLine();
                     palavra = palavra.toLowerCase();
-                    ls.pesquisarPalavra(palavra);
+                    if(ls.pesquisarPalavra(palavra) == null){
+                        System.out.println("\nPalavra não encontrada!");
+                        break;
+                    }else{
+                        ls.listar(ls.pesquisarPalavra(palavra));
+                        
+                    }
 
                     break;
                 case 5:

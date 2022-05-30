@@ -180,8 +180,12 @@ public class ListaOrdenadaDePalavras {
         Palavra aux = head;
 
         for (int i = 0; i < listaOcorrencias.size(); i++) {
+            
+            if(aux == null){
+                return null;
+            }
+
             if (aux.palavra.equals(p)) {
-                listar(aux);
                 return aux;
             }
             aux = aux.next;
@@ -194,7 +198,7 @@ public class ListaOrdenadaDePalavras {
             System.out.println("Nenhum objeto encontrado!");
             return;
         }
-        System.out.println("Palavra: " + p.palavra + "  |   Paginas: " + listaOcorrencias.todasPaginas(p.palavra));
+        System.out.println("\nPalavra: " + p.palavra + "  |   Paginas: " + listaOcorrencias.todasPaginas(p.palavra));
 
     }
 
