@@ -2,7 +2,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-
 public class App {
     Scanner sc = new Scanner(System.in);
     ListaOrdenadaDePalavras ls = new ListaOrdenadaDePalavras();
@@ -27,7 +26,7 @@ public class App {
             System.out.println("\nMenu!\n");
             System.out.println("Escolha a alternativa desejada:\n");
             System.out.println(
-                    "1. Exibir todo o índice remissivo (em ordem alfabética);\n2. Exibir o percentual de stopwords do texto (quanto % do texto é formado por stopwords);\n3. Encontrar a palavra mais frequente, isto é, com maior número de ocorrências;\n4. Pesquisar palavras, isto é, o usuário informa uma palavra e o programa lista os números das páginas em que a palavra ocorre;\n5. Listar todo o índice remissivo;\n6. Encerrar o programa.");
+                    "1. Exibir todo o índice remissivo (em ordem alfabética);\n2. Exibir o percentual de stopwords do texto (quanto % do texto é formado por stopwords);\n3. Encontrar a palavra mais frequente, isto é, com maior número de ocorrências;\n4. Pesquisar palavras, isto é, o usuário informa uma palavra e o programa lista os números das páginas em que a palavra ocorre;\n5. Encerrar o programa.");
             int opc = sc.nextInt();
 
             switch (opc) {
@@ -36,7 +35,7 @@ public class App {
 
                     break;
                 case 2:
-                    int percentual = (sw.sizePalavras() * 100) /countPalavras;
+                    int percentual = (sw.sizePalavras() * 100) / countPalavras;
                     System.out.println("\nPercentual: " + percentual + "%");
 
                     break;
@@ -54,9 +53,6 @@ public class App {
 
                     break;
                 case 5:
-                    System.out.println(ls.indiceRemissivo());
-                    break;
-                case 6:
                     cond = false;
                     System.out.println("\nFinalizando programa!");
                     break;
@@ -118,7 +114,7 @@ public class App {
                     }
 
                 }
-                
+
             } while (true);
 
         } while (true);
@@ -136,6 +132,6 @@ public class App {
             File arquivos = afile[i];
             System.out.println(arquivos.getName());
         }
-    
+
     }
 }

@@ -71,7 +71,7 @@ public class ListaOrdenadaDePalavras {
 
         for (int i = 0; i < count; i++) {
             if ((palavra.compareToIgnoreCase(comp.palavra)) < 0) {
-                addIndex(posicao, palavra);
+                addIndex(posicao, palavra, numeroDaPagina);
                 return;
             } else {
                 comp = comp.next;
@@ -88,7 +88,7 @@ public class ListaOrdenadaDePalavras {
     }
 
     // Método usado pelo outro método add() para adicionar em ordem
-    public void addIndex(int index, String palavra) {
+    public void addIndex(int index, String palavra, int numeroDaPagina) {
         // Primeiro verifica se o indice eh valido
         if (index < 0 || index > size()) {
             throw new IndexOutOfBoundsException();
@@ -101,13 +101,16 @@ public class ListaOrdenadaDePalavras {
         if (index == 0) { // se insercao no inicio
             if (count == 0) { // se a lista estava vazia
                 tail = n;
+                listaOcorrencias.add(palavra, numeroDaPagina);
             } else {
                 n.next = head;
+                listaOcorrencias.add(palavra, numeroDaPagina);
             }
             head = n;
         } else if (index == count) { // se insercao no fim
             tail.next = n;
             tail = n;
+            listaOcorrencias.add(palavra, numeroDaPagina);
         } else { // se insercao no meio
             Palavra ant = head;
             for (int i = 0; i < index - 1; i++) {
@@ -115,6 +118,7 @@ public class ListaOrdenadaDePalavras {
             }
             n.next = ant.next;
             ant.next = n;
+            listaOcorrencias.add(palavra, numeroDaPagina);
         }
 
         // Atualiza o atributo count
@@ -128,11 +132,11 @@ public class ListaOrdenadaDePalavras {
         Palavra aux = head;
         String s = "";
         while (aux != null) {
-            s += ("Palavra: " + aux.palavra);
+            s += ("Palavra: " + aux.palavra + "  |   Paginas: " + listaOcorrencias.todasPaginas(aux.palavra));
             s += ("\n");
             aux = aux.next;
         }
-        return s.toString();
+        return s;
     }
 
     // demais metodos necessarios
@@ -202,18 +206,5 @@ public class ListaOrdenadaDePalavras {
         }
         return s.replaceAll("[^A-Za-z0-9]", "");
     }
-
-    public String indiceRemissivo() {
-
-            Palavra aux = head;
-        String s = "";
-        while (aux != null) {
-            s += ("Palavra: " + aux.palavra + "  |   Paginas: " + listaOcorrencias.todasPaginas(aux.palavra));
-            s += ("\n");
-            aux = aux.next;
-        }
-        return s.toString();
-       
-        }
 
 }

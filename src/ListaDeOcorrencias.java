@@ -72,8 +72,8 @@ public class ListaDeOcorrencias {
 
         Node aux = head;
         while (aux != null) {
-            if(aux == n){
-                    return false;       
+            if (aux == n) {
+                return false;
             }
             aux = aux.next;
         }
