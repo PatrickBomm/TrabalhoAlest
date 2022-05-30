@@ -14,12 +14,13 @@ public class LinhaTexto {
      */
     public void setLine(String lin) {
         linha = lin;
-        linha = linha.replaceAll("\\t"," "); // substitui tab por espaco em branco
+        linha = linha.replaceAll("\\t",""); // substitui tab por espaco em branco
         linha = linha.replaceAll(",",""); // para remover vírgulas
         linha = linha.replaceAll("\\.",""); // para remover ponto final
         linha = linha.replaceAll("\\?",""); // para remover ponto interrogacao
         linha = linha.replaceAll("\\!",""); // para remover ponto exclamacao
         palavras = linha.split(" "); // divide a string pelo espaco em branco 
+        linha = linha.replaceAll(" ",""); // remove espacos em branco
         contPalavras = 0;
     }
     

@@ -8,12 +8,13 @@ public class ListaOrdenadaDePalavras {
 
     // Classe interna
     private class Palavra {
-        public String s;
+        public int ocorrencia;
+        public String palavra;
         public Palavra next;
 
         public Palavra(String str) {
-            s = str;
-            next = null;
+            this.palavra = str;
+            this.next = null;
             listaOcorrencias = new ListaDeOcorrencias();
         }
     }
@@ -21,6 +22,7 @@ public class ListaOrdenadaDePalavras {
     private Palavra head;
     private Palavra tail;
     private int count;
+    private int maiorOcorrencia = 0;
 
     // Construtores
     public ListaOrdenadaDePalavras() {
@@ -32,34 +34,57 @@ public class ListaOrdenadaDePalavras {
     // metodo add para adicionar uma palavra na lista
     public void add(String palavra, int numeroDaPagina) {
 
+        Palavra aux = head;
+        palavra = palavra.toLowerCase();
+
         if (count == 0) {
             Palavra n = new Palavra(palavra);
             head = n;
             tail = n;
+            n.ocorrencia++;
             count++;
-            listaOcorrencias.add(numeroDaPagina);
-
+            listaOcorrencias.add(palavra, numeroDaPagina);
             return;
         }
-        if (contains(palavra)) {
-            listaOcorrencias.add(numeroDaPagina);
-            return;
-        }else{
-            Palavra n = new Palavra(palavra);
+
+        for (int i = 0; i < count; i++) {
+            if (aux.palavra.equals(palavra)) {
+                this.listaOcorrencias.add(palavra, numeroDaPagina);
+                aux.ocorrencia++;
+                return;
+            }
+            aux = aux.next;
+        }
+
+        Palavra n = new Palavra(palavra);
         tail.next = n;
         tail = n;
         count++;
-        listaOcorrencias.add(numeroDaPagina);
-        }
+        n.ocorrencia++;
+        listaOcorrencias.add(palavra, numeroDaPagina);
+
     }
 
     // metodo toString
+    @Override
+    public String toString() {
+
+        Palavra aux = head;
+        StringBuilder s = new StringBuilder();
+        while (aux != null) {
+
+            s.append("Palavra: " + aux.palavra + "  |   Paginas: " + listaOcorrencias.todasPaginas(aux.palavra));
+            s.append("\n");
+            aux = aux.next;
+        }
+        return s.toString();
+    }
 
     // demais metodos necessarios
     public boolean contains(String palavra) {
         Palavra aux = head;
         while (aux != null) {
-            if (aux.s == palavra) {
+            if (aux.palavra == palavra) {
                 return true;
             }
             aux = aux.next;
@@ -67,17 +92,37 @@ public class ListaOrdenadaDePalavras {
         return false;
     }
 
-    public String listar() {
-        StringBuilder s = new StringBuilder();
+    public void maiorOcorrencia() {
+        String palavraAux = "";
+        Palavra p = head;
+        while (p != null) {
+            if (p.ocorrencia > maiorOcorrencia) {
+                maiorOcorrencia = p.ocorrencia;
+                palavraAux = p.palavra;
+            }
+            p = p.next;
+        }
+        System.out.println("Palavra: " + palavraAux + " | Numero Ocorrencias: " + maiorOcorrencia);
+    }
+
+    public int size() {
+        return count;
+    }
+
+    public Palavra pesquisarPalavra(String p) {
         Palavra aux = head;
 
-        while (aux != null) {
-
-            s.append("Palavra: " + aux.s + "  |   Linhas: ");
-            s.append(listaOcorrencias.listar());
-            s.append("\n");
+        for (int i = 0; i < listaOcorrencias.size(); i++) {
+            if (aux.palavra.equals(p)) {
+                listar(aux);
+                return aux;
+            }
             aux = aux.next;
         }
-        return s.toString();
+        return null;
+    }
+
+    public String listar(Palavra p) {
+        return "Palavra: " + p.palavra + "; Lista: " + listaOcorrencias.todasPaginas(p.palavra);
     }
 }

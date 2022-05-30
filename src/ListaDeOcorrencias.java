@@ -10,9 +10,12 @@ public class ListaDeOcorrencias {
     private class Node {
         public int numeroDaPagina;
         public Node next;   
+        public String palavra;
+        
 
-        public Node(int n) {
+        public Node(String p, int n) {
             numeroDaPagina = n;
+            palavra = p;
             next = null;
         }
     }
@@ -21,7 +24,6 @@ public class ListaDeOcorrencias {
     private Node head;
     private Node tail;
     private int count;
-    private ListaOrdenadaDePalavras ls;
 
     // Metodos 
     public ListaDeOcorrencias() {
@@ -62,17 +64,23 @@ public class ListaDeOcorrencias {
      * @return true se adicionou no final da lista o numero de pagina  
      * recebido por parametro, e false caso contrario.
      */
-    public boolean add(int numPagina)  {
+    public boolean add(String palavra, int numPagina)  {
        
-        Node n = new Node(numPagina);
+        Node n = new Node(palavra, numPagina);
         if(count == 0){
             head = n;
             tail = n;
             count++; 
             return true;
         }
-        if(contains(numPagina)){
-            return false;
+        for(int i = 0; i < count; i++){
+            Node aux = head;
+            if(aux.palavra == palavra){
+                if(aux.numeroDaPagina == numPagina){
+                    return false;
+                }
+            }
+            aux = aux.next;
         }
        tail.next = n;
        tail = n;
@@ -109,45 +117,43 @@ public class ListaDeOcorrencias {
      * @param numPagina o elemento a ser procurado
      * @return true se a lista contem o elemento especificado
      */
-    public boolean contains(int numPagina) {
+    public boolean contains(String p) {
         Node aux = head;
         while(aux != null) {
-            if (aux.numeroDaPagina == numPagina) {
+            if (aux.palavra == p) {
                 return true;
             }
             aux = aux.next;
         }
         return false;
     }    
-    
-    public StringBuilder listar(){
-        StringBuilder s = new StringBuilder();
-        int auxiliar;
-        Node aux = head;
 
-        while (aux != null) {
-            auxiliar = aux.numeroDaPagina;
-            if(ls.listaOcorrencias.equals(aux)){
-            s.append(auxiliar);
-            s.append("; ");
-            aux = aux.next;}
+    public StringBuilder todasPaginas(String palavra){
+
+        Node aux = head;
+        StringBuilder s = new StringBuilder();
+
+        for(int i = 0; i < count; i++){
+            if(aux.palavra.equals(palavra)){
+                s.append(aux.numeroDaPagina + "; ");
+            }
+            aux = aux.next;
         }
         return s;
+
     }
 
     @Override
     public String toString() {
         StringBuilder s = new StringBuilder();
-        int auxiliar;
         Node aux = head;
 
         while (aux != null) {
-            auxiliar = aux.numeroDaPagina;
-            s.append(auxiliar);
-            s.append("\n");
+            s.append(aux.numeroDaPagina);
+            s.append("; ");
             aux = aux.next;
         }
-
         return s.toString();
+
     }
 }
