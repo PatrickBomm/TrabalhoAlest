@@ -5,8 +5,7 @@ public class App {
     ListaOrdenadaDePalavras ls = new ListaOrdenadaDePalavras();
     ListaDeOcorrencias ocorrencias = new ListaDeOcorrencias();
     StopWord sw = new StopWord();
-    private int countPalavras;
-    private int countStopWords;
+    int countPalavras;
 
     public static void main(String[] args) throws Exception {
         App app = new App();
@@ -34,9 +33,12 @@ public class App {
 
                     break;
                 case 2:
-                    int percentual = (countStopWords * 100) / countPalavras;
+                System.out.println(sw.sizePalavras());
+                System.out.println("\n" + countPalavras);
+                    int percentual = sw.sizePalavras() * 100;
+                    percentual = percentual/countPalavras;
 
-                    System.out.println("Percentual: " + percentual + "%");
+                    System.out.println("\nPercentual: " + percentual + "%");
 
                     break;
                 case 3:
@@ -99,22 +101,22 @@ public class App {
             linha.setLine(l); // define o texto da linha
             do // laco que passa em cada palavra de uma linha
             {
-                String palavra = linha.getNextWord();
-                countPalavras++; // obtem a proxima palavra da linha
+                String palavra = linha.getNextWord(); // obtem a proxima palavra da linha
                 if (palavra == null)// acabou a linha
                 {
                     break;
                 }
+                countPalavras++;
                 if (nPagina >= 0) {
+                    int a = sw.contains(palavra);
 
-                    if (sw.contains(palavra) != true) {
+                    if (a == 0) {
                         ls.add(palavra, nPagina);
-                    }else{
-                        countStopWords++;
-
+                        
                     }
 
                 }
+                
             } while (true);
 
         } while (true);

@@ -15,6 +15,7 @@ public class StopWord {
     private Node head;
     private Node tail;
     private int count;
+    private int countPalavras;
 
     // Metodos
 
@@ -28,16 +29,16 @@ public class StopWord {
         count = 0;
     }
 
-    public boolean contains(String palavra) {
+    public int contains(String palavra) {
         Node aux = head;
         while (aux != null) {
-            if (aux.palavra == palavra) {
-                System.out.println("tem");
-                return true;
+            if (aux.palavra.equals(palavra)) {
+                countPalavras++;
+                return 1;
             }
             aux = aux.next;
         }
-        return false;
+        return 0;
     }
 
     public void add(String palavra) {
@@ -60,15 +61,19 @@ public class StopWord {
 
     public void readTxt() {
 
+        String aux = "";
         String l = "";
         arquivo.open("assets/stopWords.txt");
         do {
-            if (l == null) { // acabou o arquivo?
+            if (l == null || aux == null) {
                 break;
             }
             l = arquivo.getNextLine();
-            add(l);
-
+            aux = l;
+            if (aux != null) {
+                l = aux.replaceAll(" ", "");
+                add(l);
+            }
         } while (true);
         arquivo.close();
     }
@@ -78,10 +83,19 @@ public class StopWord {
         Node aux = head;
         String s = "";
         while (aux != null) {
-            s += ("Palavra: " + aux.palavra );
+            s += ("Palavra: " + aux.palavra);
             s += ("\n");
             aux = aux.next;
         }
         return s.toString();
     }
+
+    public int size() {
+        return count;
+    }
+
+    public int sizePalavras() {
+        return countPalavras;
+    }
+
 }

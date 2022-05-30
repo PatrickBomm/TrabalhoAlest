@@ -6,7 +6,7 @@
 public class ListaOrdenadaDePalavras {
     ListaDeOcorrencias listaOcorrencias = new ListaDeOcorrencias();
     ArquivoTexto aq = new ArquivoTexto();
-
+    StopWord sw = new StopWord();
     // Classe interna
     private class Palavra {
         public int ocorrencia;
@@ -41,6 +41,7 @@ public class ListaOrdenadaDePalavras {
 
     Palavra aux = head;
     palavra = removeAllNonAlphaNumeric(palavra.toLowerCase());
+
 
     if (count == 0) {
         Palavra n = new Palavra(palavra);
