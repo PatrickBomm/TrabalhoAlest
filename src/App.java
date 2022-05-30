@@ -153,7 +153,7 @@ public class App {
     }
 
     public void nomeArquivo() throws IOException{
-        System.out.println("Arquivos na pasta 'assets':");
+        System.out.println("\nArquivos na pasta 'assets':\n");
         visualizarArquivos();
 
         System.out.println("\nDigite o nome do arquivo com o .txt:");
