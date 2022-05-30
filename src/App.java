@@ -1,4 +1,7 @@
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
+
 
 public class App {
     Scanner sc = new Scanner(System.in);
@@ -13,7 +16,7 @@ public class App {
 
     }
 
-    public void view() {
+    public void view() throws IOException {
         ocorrencias.start();
         sw.readTxt();
         ls.start();
@@ -33,11 +36,7 @@ public class App {
 
                     break;
                 case 2:
-                System.out.println(sw.sizePalavras());
-                System.out.println("\n" + countPalavras);
-                    int percentual = sw.sizePalavras() * 100;
-                    percentual = percentual/countPalavras;
-
+                    int percentual = (sw.sizePalavras() * 100) /countPalavras;
                     System.out.println("\nPercentual: " + percentual + "%");
 
                     break;
@@ -55,7 +54,7 @@ public class App {
 
                     break;
                 case 5:
-
+                    System.out.println(ls.indiceRemissivo());
                     break;
                 case 6:
                     cond = false;
@@ -70,7 +69,7 @@ public class App {
 
     }
 
-    public void readTxt() {
+    public void readTxt() throws IOException {
         int nLinha = 0;
         int nPagina = 1;
 
@@ -79,7 +78,10 @@ public class App {
 
         ArquivoTexto arquivo = new ArquivoTexto();
 
-        System.out.println("Digite o nome do arquivo com o .txt:");
+        System.out.println("Arquivos na pasta 'assets':");
+        visualizarArquivos();
+
+        System.out.println("\nDigite o nome do arquivo com o .txt:");
         String arquivoNome = "assets/";
         arquivoNome += sc.nextLine();
 
@@ -123,5 +125,17 @@ public class App {
 
         arquivo.close();
 
+    }
+
+    public void visualizarArquivos() throws IOException {
+
+        File file = new File("assets/");
+        File afile[] = file.listFiles();
+        int i = 0;
+        for (int j = afile.length; i < j; i++) {
+            File arquivos = afile[i];
+            System.out.println(arquivos.getName());
+        }
+    
     }
 }
