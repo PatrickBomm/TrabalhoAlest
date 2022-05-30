@@ -4,7 +4,7 @@
  * @author Isabel H. Manssour
  */
 public class ListaOrdenadaDePalavras {
-    public ListaDeOcorrencias listaOcorrencias;
+    ListaDeOcorrencias listaOcorrencias = new ListaDeOcorrencias();
 
     // Classe interna
     private class Palavra {
@@ -15,7 +15,6 @@ public class ListaOrdenadaDePalavras {
         public Palavra(String str) {
             this.palavra = str;
             this.next = null;
-            listaOcorrencias = new ListaDeOcorrencias();
         }
     }
 
@@ -26,6 +25,10 @@ public class ListaOrdenadaDePalavras {
 
     // Construtores
     public ListaOrdenadaDePalavras() {
+
+    }
+    
+    public void start(){
         head = null;
         tail = null;
         count = 0;
@@ -36,9 +39,9 @@ public class ListaOrdenadaDePalavras {
 
         Palavra aux = head;
         palavra = palavra.toLowerCase();
+        Palavra n = new Palavra(palavra);
 
         if (count == 0) {
-            Palavra n = new Palavra(palavra);
             head = n;
             tail = n;
             n.ocorrencia++;
@@ -47,16 +50,14 @@ public class ListaOrdenadaDePalavras {
             return;
         }
 
-        for (int i = 0; i < count; i++) {
+        while(aux != null){
             if (aux.palavra.equals(palavra)) {
-                this.listaOcorrencias.add(palavra, numeroDaPagina);
+                listaOcorrencias.add(palavra, numeroDaPagina);
                 aux.ocorrencia++;
                 return;
             }
             aux = aux.next;
         }
-
-        Palavra n = new Palavra(palavra);
         tail.next = n;
         tail = n;
         count++;
@@ -66,15 +67,14 @@ public class ListaOrdenadaDePalavras {
     }
 
     // metodo toString
-    @Override
-    public String toString() {
+
+    public String listar() {
 
         Palavra aux = head;
-        StringBuilder s = new StringBuilder();
+        String s = "";
         while (aux != null) {
-
-            s.append("Palavra: " + aux.palavra + "  |   Paginas: " + listaOcorrencias.todasPaginas(aux.palavra));
-            s.append("\n");
+            s += ("Palavra: " + aux.palavra + "  |   Paginas: " + listaOcorrencias.todasPaginas(aux.palavra));
+            s += ("\n");
             aux = aux.next;
         }
         return s.toString();
@@ -102,7 +102,7 @@ public class ListaOrdenadaDePalavras {
             }
             p = p.next;
         }
-        System.out.println("Palavra: " + palavraAux + " | Numero Ocorrencias: " + maiorOcorrencia);
+        System.out.println("Palavra: " + palavraAux + " |   Numero Ocorrencias: " + maiorOcorrencia);
     }
 
     public int size() {
@@ -114,7 +114,7 @@ public class ListaOrdenadaDePalavras {
 
         for (int i = 0; i < listaOcorrencias.size(); i++) {
             if (aux.palavra.equals(p)) {
-                listar(aux);
+            listar(aux);
                 return aux;
             }
             aux = aux.next;
@@ -122,7 +122,8 @@ public class ListaOrdenadaDePalavras {
         return null;
     }
 
-    public String listar(Palavra p) {
-        return "Palavra: " + p.palavra + "; Lista: " + listaOcorrencias.todasPaginas(p.palavra);
+    public void listar(Palavra p) {
+       System.out.println("Palavra: " + p.palavra + "  |   Paginas: " + listaOcorrencias.todasPaginas(p.palavra));
+       
     }
 }

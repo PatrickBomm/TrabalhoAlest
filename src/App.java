@@ -3,6 +3,7 @@ import java.util.*;
 public class App {
     Scanner sc = new Scanner(System.in);
     ListaOrdenadaDePalavras ls = new ListaOrdenadaDePalavras();
+    ListaDeOcorrencias ocorrencias = new ListaDeOcorrencias();
     private int countPalavras;
 
     public static void main(String[] args) throws Exception {
@@ -12,7 +13,8 @@ public class App {
     }
 
     public void view() {
-
+        ocorrencias.start();
+        ls.start();
         readTxt();
 
         boolean cond = true;
@@ -26,8 +28,9 @@ public class App {
 
             switch (opc) {
                 case 1:
-                    System.out.println(ls.toString());
-
+                    System.out.println(ls.listar());
+                
+                    
                     break;
                 case 2:
                     int percentual = (ls.size() * 100) / countPalavras;
@@ -66,7 +69,7 @@ public class App {
 
     public void readTxt() {
         int nLinha = 0;
-        int nPagina = 0;
+        int nPagina = 1;
 
         LinhaTexto linha = new LinhaTexto(); // objeto que gerencia uma linha
         String l;
@@ -101,9 +104,11 @@ public class App {
                 {
                     break;
                 }
-                ls.add(palavra, nPagina);
+                if (nPagina >= 0) {
+                    ls.add(palavra, nPagina);
+                }
             } while (true);
-            
+
         } while (true);
 
         arquivo.close();
